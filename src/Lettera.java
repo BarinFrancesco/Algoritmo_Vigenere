@@ -1,7 +1,5 @@
-/**
- * Classe che rappresenta un singolo carattere e gestisce la traslazione circolare
- * nell'intervallo dei caratteri ASCII stampabili (da 32 a 126).
- */
+//Classe per la gestione del carattere
+
 public class Lettera {
     private char carattere;
 
@@ -13,28 +11,22 @@ public class Lettera {
         return carattere;
     }
 
-    /**
-     * Verifica se il carattere rientra nell'intervallo stampabile (32 - 126).
-     */
+    //controllo che sia uno di quelli validi
     public boolean eValido() {
         return carattere >= 32 && carattere <= 126;
     }
 
-    /**
-     * Trasla il carattere di un certo salto in base alla direzione.
-     * @param salto valore intero dello spostamento (può essere negativo o maggiore di 94)
-     * @param direzione '+' per la cifratura, '-' per la decifratura
-     */
+    //funzione che fa girare i caratteri
     public void trasla(int salto, char direzione) {
         if (!eValido()) {
-            return; // Se il carattere è fuori dall'intervallo, resta invariato
+            return; // Se il carattere è fuori dall'intervallo non lo sposto
         }
 
         int min = 32;
         int max = 126;
         int range = (max - min) + 1; // 95 caratteri totali
 
-        // Convertiamo il carattere nel suo valore intero ASCII
+        // trasformo il char in numero
         int codiceCorrente = (int) carattere;
         int nuovoCodice;
 
@@ -43,10 +35,10 @@ public class Lettera {
         } else if (direzione == '-') {
             nuovoCodice = codiceCorrente - salto;
         } else {
-            return; // Direzione non valida
+            return; // se non è + o - c'èun parametro sbagliato
         }
 
-        // Gestione della circolarità (funziona correttamente anche con numeri negativi)
+        // uso il modulo per garantire la circolarità
         int offset = (nuovoCodice - min) % range;
         if (offset < 0) {
             offset += range;
